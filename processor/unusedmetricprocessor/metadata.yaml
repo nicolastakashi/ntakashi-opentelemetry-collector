@@ -1,0 +1,10 @@
+type: filter
+
+status:
+  class: processor
+  stability:
+    alpha: [metrics]
+  distributions: []
+  warnings: []
+  codeowners:
+    active: [nicolastakashi]
