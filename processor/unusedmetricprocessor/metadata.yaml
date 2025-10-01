@@ -1,4 +1,4 @@
-type: filter
+type: unusedmetric
 
 status:
   class: processor

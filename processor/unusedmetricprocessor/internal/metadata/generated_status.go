@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	Type      = component.MustNewType("filter")
+	Type      = component.MustNewType("unusedmetric")
 	ScopeName = "github.com/nicolastakashi/ntakashi-opentelemetry-collector/processor/unusedmetricprocessor"
 )
 

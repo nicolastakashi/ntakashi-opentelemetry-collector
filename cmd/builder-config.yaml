@@ -1,0 +1,32 @@
+dist:
+  module: github.com/nicolastakashi/ntakashi-opentelemetry-collector/cmd/ntakashi-opentelemetry-collector
+  name: ntakashi-opentelemetry-collector
+  description: ntakashi-opentelemetry-collector binary
+  version: 0.1.0-dev
+  output_path: ./cmd
+
+exporters:
+  - gomod:
+      go.opentelemetry.io/collector/exporter/debugexporter v0.136.0
+  - gomod:
+      go.opentelemetry.io/collector/exporter/otlpexporter v0.136.0
+
+processors:
+  - gomod:
+      go.opentelemetry.io/collector/processor/batchprocessor v0.136.0
+  - gomod:
+      github.com/nicolastakashi/ntakashi-opentelemetry-collector/processor/unusedmetricprocessor main
+
+receivers:
+  - gomod:
+      go.opentelemetry.io/collector/receiver/otlpreceiver v0.136.0
+
+providers:
+  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/httpsprovider v1.18.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.18.0
+
+replaces:
+  - github.com/nicolastakashi/ntakashi-opentelemetry-collector/processor/unusedmetricprocessor => /Users/nicolastakashi/workspace/github.com/nicolastakashi/ntakashi-otel-collector/processor/unusedmetricprocessor
