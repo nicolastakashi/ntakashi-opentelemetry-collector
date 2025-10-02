@@ -11,6 +11,7 @@ import (
 	"go.opentelemetry.io/collector/processor"
 
 	"github.com/nicolastakashi/ntakashi-opentelemetry-collector/processor/unusedmetricprocessor/internal/metadata"
+	"github.com/nicolastakashi/ntakashi-opentelemetry-collector/processor/unusedmetricprocessor/internal/server"
 )
 
 // NewFactory returns a new factory for the Span processor.
@@ -33,10 +34,20 @@ func createMetricsProcessor(
 ) (processor.Metrics, error) {
 	cfg := baseCfg.(*Config)
 
+	client := server.NewClient(&server.Config{
+		Address: cfg.Server.Address,
+		Timeout: cfg.Server.Timeout,
+		TlsConfig: server.TLSConfig{
+			InsecureSkipVerify: cfg.Server.TlsConfig.InsecureSkipVerify,
+		},
+	})
+
 	unusedMetricProcessor, err := newUnusedMetricProcessor(ctx,
 		params,
 		cfg,
-		nextConsumer)
+		nextConsumer,
+		client,
+	)
 	if err != nil {
 		return nil, err
 	}
