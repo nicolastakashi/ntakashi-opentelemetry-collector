@@ -34,6 +34,11 @@ func createMetricsProcessor(
 ) (processor.Metrics, error) {
 	cfg := baseCfg.(*Config)
 
+	// Ensure defaults are applied to prevent nil dereference in client setup
+	if err := cfg.Validate(); err != nil {
+		return nil, err
+	}
+
 	client := server.NewClient(&server.Config{
 		Address: cfg.Server.Address,
 		Timeout: cfg.Server.Timeout,

@@ -52,3 +52,11 @@ telemetry:
       attributes: [job]
       sum:
         value_type: int
+
+tests:
+  config:
+    server:
+      address: http://localhost:0
+      timeout: 5s
+      tls_config:
+        insecure_skip_verify: true
