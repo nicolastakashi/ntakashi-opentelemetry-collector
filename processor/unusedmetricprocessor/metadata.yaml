@@ -4,7 +4,7 @@ status:
   class: processor
   stability:
     alpha: [metrics]
-  distributions: []
+  distributions: [ntakashi-otel-collector]
   warnings: []
   codeowners:
     active: [nicolastakashi]

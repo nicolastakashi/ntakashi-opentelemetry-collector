@@ -84,7 +84,10 @@ func (c *client) GetMetricUsage(ctx context.Context, job string, name string) (M
 	}
 
 	if len(response.Data) == 0 {
-		return MetricUsage{}, fmt.Errorf("no data found")
+		return MetricUsage{
+			Name:   name,
+			Unused: false,
+		}, nil
 	}
 
 	return response.Data[0], nil
