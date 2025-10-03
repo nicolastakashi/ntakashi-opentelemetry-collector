@@ -8,3 +8,47 @@ status:
   warnings: []
   codeowners:
     active: [nicolastakashi]
+
+attributes:
+  job:
+    description: The job of the metric
+    type: string
+  
+telemetry:
+  metrics:
+    otelcol_processor_unusedmetric_dropped:
+      description: The number of metrics dropped by the unusedmetric processor
+      unit: "{metrics}"
+      enabled: true
+      attributes: [job]
+      sum:
+        value_type: int
+        monotonic: true
+    otelcol_processor_unusedmetric_kept:
+      description: The number of metrics kept by the unusedmetric processor
+      unit: "{metrics}"
+      enabled: true
+      attributes: [job]
+      sum:
+        value_type: int
+        monotonic: true
+    otelcol_processor_unusedmetric_error:
+      description: The number of errors returned by the unusedmetric processor
+      unit: "{errors}"
+      enabled: true
+      sum:
+        value_type: int
+        monotonic: true
+    otelcol_processor_unusedmetric_backend_duration:
+      description: The duration of the backend call to the unusedmetric backend
+      unit: s
+      enabled: true
+      histogram:
+        value_type: int
+    otelcol_processor_unusedmetric_dropped_datapoints:
+      description: The number of datapoints dropped by the unusedmetric processor
+      unit: "{datapoints}"
+      enabled: true
+      attributes: [job]
+      sum:
+        value_type: int
