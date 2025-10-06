@@ -15,16 +15,18 @@
 
 ## Overview
 
-The Unused Metric Processor is an experimental OpenTelemetry Collector component designed to intelligently filter out unused metrics from telemetry pipelines. This processor analyzes metric usage patterns and automatically drops metrics that are not being actively consumed or queried, helping to reduce storage costs and improve pipeline performance.
+The Unused Metric Processor is an experimental OpenTelemetry Collector component that filters out unused metrics from telemetry pipelines. The processor queries a Prometheus analytics server to determine which metrics are actively being used, and automatically drops any metrics that are not being consumed or queried.
 
-The processor was developed based on usage pattern analysis from the [prom-analytics-proxy](https://github.com/nicolastakashi/prom-analytics-proxy) project, which provides insights into which metrics are actually being used in production environments.
+This helps reduce storage costs and improve pipeline performance by eliminating metrics that provide no value to your monitoring and alerting systems.
+
+The processor integrates with the [prom-analytics-proxy](https://github.com/nicolastakashi/prom-analytics-proxy) project, which tracks actual metric usage patterns in production environments.
 
 ## Features
 
-- **Intelligent Metric Filtering**: Automatically identifies and drops unused metrics based on usage patterns
-- **Configurable Retention**: Flexible configuration options for metric retention policies
-- **Performance Optimization**: Reduces storage overhead and improves pipeline efficiency
-- **Usage Pattern Analysis**: Leverages real-world usage data to make informed filtering decisions
+- **Real-time Usage Checking**: Queries Prometheus analytics server to determine if metrics are actively being used
+- **Automatic Metric Dropping**: Drops unused metrics from the pipeline to reduce storage and processing overhead
+- **Prometheus Integration**: Works with prom-analytics-proxy to access real usage data from your Prometheus instance
+- **Performance Optimization**: Reduces storage costs and improves pipeline efficiency by eliminating unused metrics
 
 ## Configuration
 
@@ -32,9 +34,9 @@ The `unusedmetric` processor can be configured with the following options:
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `server.address` | string | - | **Required.** The address of the analytics server that provides usage pattern data |
-| `server.timeout` | duration | `10s` | Timeout for server requests |
-| `server.tls_config.insecure_skip_verify` | bool | `false` | Skip TLS certificate verification |
+| `server.address` | string | - | **Required.** The address of the Prometheus analytics server (prom-analytics-proxy) |
+| `server.timeout` | duration | `10s` | Timeout for analytics server requests |
+| `server.tls_config.insecure_skip_verify` | bool | `false` | Skip TLS certificate verification for the analytics server |
 
 ## Example Configuration
 
@@ -52,6 +54,8 @@ processors:
 
 In this example:
 
-- The processor connects to an analytics server at `http://localhost:9092`
-- It has a 10-second timeout for server requests
+- The processor connects to a prom-analytics-proxy server at `http://localhost:9092`
+- It queries this server to check if each metric is being used
+- Metrics that are not being used are automatically dropped from the pipeline
+- It has a 10-second timeout for analytics server requests
 - TLS verification is disabled for development purposes
